@@ -27,8 +27,8 @@ public class App extends Application {
     public void start(Stage stage) throws IOException {
     	EventBus.getDefault().register(this);
         this.controller = new PrimaryController();
-    	client = SimpleClient.getClient();
-    	client.openConnection();
+//    	client = SimpleClient.getClient();
+//    	client.openConnection();
       scene = new Scene(loadFXML("primary"));
         stage.setScene(scene);
         stage.show();

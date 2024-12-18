@@ -6,7 +6,10 @@
 package il.cshaifasweng.OCSFMediatorExample.client;
 
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.GridPane;
@@ -19,6 +22,7 @@ import java.util.HashMap;
 import java.util.Map;
 import javafx.application.Platform;
 import javafx.event.ActionEvent;
+import javafx.stage.Stage;
 import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
 
@@ -64,9 +68,14 @@ public class PrimaryController {
 	@FXML
 	private Label waitLabel;
 
+	@FXML // fx:id="connectionSettings"
+	private Button connectionSettings; // Value injected by FXMLLoader
+
 	@FXML // fx:id="root"
 	private AnchorPane root; // Value injected by FXMLLoader
 	@FXML // fx:id="root"
+
+
 
 
 
@@ -86,17 +95,12 @@ public class PrimaryController {
 	@FXML
 	void initialize(){
 		System.out.println("initialize");
-		try {
 			EventBus.getDefault().register(this);
 			for(Node node : XOMatrix.getChildren())
 			{
 				buttonStringMap.put(node.getId(),(Button)node);
 			}
-			SimpleClient.getClient().sendToServer("add client");
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
+//			SimpleClient.getClient().sendToServer("add client");
 	}
 
 	public void ButtonClicked(ActionEvent event) throws IOException {
@@ -184,6 +188,23 @@ public class PrimaryController {
 			buttonStringMap.forEach((key, value) ->{
 				value.setDisable(true); // Disable the button
 			});
+	}
+
+
+	@FXML
+	void onConnectionSettings(ActionEvent event) {
+		System.out.println("in connection");
+		try {
+			FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("secondary.fxml"));
+			Parent root1 = (Parent) fxmlLoader.load();
+			Stage stage = new Stage();
+			// stage.initStyle(StageStyle.TRANSPARENT);
+			stage.setTitle("Second Window");
+			stage.setScene(new Scene(root1));
+			stage.show();
+		} catch (Exception e) {
+			System.out.println("Cant load new window");
+		}
 	}
 
 }
