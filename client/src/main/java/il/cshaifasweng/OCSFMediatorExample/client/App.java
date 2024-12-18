@@ -20,11 +20,14 @@ import org.greenrobot.eventbus.Subscribe;
 public class App extends Application {
 
     private static Scene scene;
+    private static Stage primaryStage;
+    public static Stage secondaryStage;
     private SimpleClient client;
     private PrimaryController controller;
 
     @Override
     public void start(Stage stage) throws IOException {
+        primaryStage=stage;
     	EventBus.getDefault().register(this);
         this.controller = new PrimaryController();
 //    	client = SimpleClient.getClient();
@@ -74,6 +77,10 @@ public class App extends Application {
             alert.setContentText(event.player+" has won the game");
             alert.show();
         });
+    }
+    public static void switchToPrimary() throws Exception {
+        Parent root = FXMLLoader.load(App.class.getResource("primary.fxml"));
+        primaryStage.setScene(new Scene(root));
     }
 	public static void main(String[] args) {
         launch();

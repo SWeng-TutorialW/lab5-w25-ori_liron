@@ -30,6 +30,7 @@ public class SimpleServer extends AbstractServer {
 		{
 			SubscribedClient connection = new SubscribedClient(client);
 			SubscribersList.add(connection);
+			System.out.println(SubscribersList.size());
 			try {
 				if (SubscribersList.size() == 2) {
 

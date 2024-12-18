@@ -25,6 +25,7 @@ public class SimpleClient extends AbstractClient {
 		if (message.equals("X") || message.equals("O")) {
 			getClient().setID(message);
 			EventBus.getDefault().post(new newGameEvent(message));
+			System.out.println("my id is"+getID());
 		}
 		if(message.contains("wait"))
 		{

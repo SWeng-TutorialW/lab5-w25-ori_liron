@@ -6,9 +6,13 @@ package il.cshaifasweng.OCSFMediatorExample.client;
 import static il.cshaifasweng.OCSFMediatorExample.client.SimpleClient.client;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
+import javafx.stage.Stage;
 
 import java.io.IOException;
 
@@ -30,7 +34,7 @@ public class SecondaryController {
     private Label portLabel; // Value injected by FXMLLoader
 
     @FXML
-    void onOKButton(ActionEvent event) throws IOException {
+    void onOKButton(ActionEvent event) throws Exception {
         System.out.println("OK");
         if(portInput.getText().isEmpty() || hostInput.getText().isEmpty()) {
             SimpleClient.port=3000;
@@ -46,7 +50,13 @@ public class SecondaryController {
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
-        SimpleClient.getClient().sendToServer("add client");
+        try {
+            App.switchToPrimary();
+            SimpleClient.getClient().sendToServer("add client");
+            App.secondaryStage.close();
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
     }
 
 }

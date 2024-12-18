@@ -198,10 +198,12 @@ public class PrimaryController {
 			FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("secondary.fxml"));
 			Parent root1 = (Parent) fxmlLoader.load();
 			Stage stage = new Stage();
+			App.secondaryStage=stage;
 			// stage.initStyle(StageStyle.TRANSPARENT);
 			stage.setTitle("Second Window");
 			stage.setScene(new Scene(root1));
 			stage.show();
+			connectionSettings.setDisable(true);
 		} catch (Exception e) {
 			System.out.println("Cant load new window");
 		}
