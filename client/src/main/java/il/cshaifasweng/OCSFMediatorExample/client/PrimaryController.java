@@ -61,6 +61,9 @@ public class PrimaryController {
 	@FXML // fx:id="Player"
 	private Label Player; // Value injected by FXMLLoader
 
+	@FXML
+	private Label waitLabel;
+
 	@FXML // fx:id="root"
 	private AnchorPane root; // Value injected by FXMLLoader
 	@FXML // fx:id="root"
@@ -156,6 +159,7 @@ public class PrimaryController {
 	public void onNewGameEvent(newGameEvent event) {
 		Platform.runLater(()-> {
 					Player.setText("Player: "+event.player);
+					waitLabel.setText("Game started");
 				}
 		);
 		if(SimpleClient.getClient().getID().equals("X"))
@@ -164,6 +168,22 @@ public class PrimaryController {
 				value.setDisable(true); // Disable the button
 			});
 		}
+		if(SimpleClient.getClient().getID().equals("O"))
+		{
+			buttonStringMap.forEach((key, value) ->{
+				value.setDisable(false); // Disable the button
+			});
+		}
+	}
+	@Subscribe
+	public void onInWaitEvent(inWaitEvent event) {
+		Platform.runLater(()-> {
+					waitLabel.setText("please wait for another player");
+				}
+		);
+			buttonStringMap.forEach((key, value) ->{
+				value.setDisable(true); // Disable the button
+			});
 	}
 
 }
