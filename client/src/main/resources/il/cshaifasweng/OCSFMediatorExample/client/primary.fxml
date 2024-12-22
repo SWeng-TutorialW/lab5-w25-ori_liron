@@ -71,10 +71,10 @@
        </GridPane>
    <TextField fx:id="playerTurn" layoutX="59.0" layoutY="31.0" text="Turn: O" />
    <Label fx:id="Player" layoutX="265.0" layoutY="35.0" text="Player:" />
-   <Label fx:id="waitLabel" layoutX="178.0" layoutY="348.0" text="please wait for another player">
+   <Label fx:id="waitLabel" layoutX="167.0" layoutY="350.0" text="please connect to start the game">
       <font>
          <Font size="16.0" />
       </font>
    </Label>
-   <Button fx:id="connectionSettings" layoutX="383.0" layoutY="19.0" mnemonicParsing="false" onAction="#onConnectionSettings" text="connection Settings" />
+   <Button fx:id="connectionSettings" layoutX="409.0" layoutY="23.0" mnemonicParsing="false" onAction="#onConnectionSettings" text="connect" />
 </AnchorPane>
