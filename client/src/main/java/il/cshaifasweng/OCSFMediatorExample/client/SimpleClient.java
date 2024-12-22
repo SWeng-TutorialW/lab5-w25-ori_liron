@@ -6,8 +6,11 @@ import il.cshaifasweng.OCSFMediatorExample.client.ocsf.AbstractClient;
 import il.cshaifasweng.OCSFMediatorExample.entities.Warning;
 
 public class SimpleClient extends AbstractClient {
-	
-	private static SimpleClient client = null;
+
+	public static SimpleClient client = null;
+	private String ID;
+	public static String host="localhost";
+	public  static int port=3000;
 
 	private SimpleClient(String host, int port) {
 		super(host, port);
@@ -18,17 +21,40 @@ public class SimpleClient extends AbstractClient {
 		if (msg.getClass().equals(Warning.class)) {
 			EventBus.getDefault().post(new WarningEvent((Warning) msg));
 		}
-		else{
-			String message = msg.toString();
-			System.out.println(message);
+		String message = msg.toString();
+		if (message.equals("X") || message.equals("O")) {
+			getClient().setID(message);
+			EventBus.getDefault().post(new newGameEvent(message));
+			System.out.println("my id is"+getID());
 		}
+		if(message.contains("wait"))
+		{
+			EventBus.getDefault().post(new inWaitEvent(message));
+		}
+		if(message.startsWith("#newMove,"))
+		{
+			EventBus.getDefault().post(new playerMoveEvent(message));
+		}
+		if(message.contains("is the winner"))
+		{
+			String winner=message.substring(26,27);
+			EventBus.getDefault().post(new WinEvent(winner));
+		}
+
+			System.out.println(message);
 	}
-	
 	public static SimpleClient getClient() {
 		if (client == null) {
-			client = new SimpleClient("localhost", 3000);
+			client = new SimpleClient(host, port);
 		}
 		return client;
 	}
-
+	public String getID()
+	{
+		return ID;
+	}
+	public void setID(String id)
+	{
+		ID=id;
+	}
 }
